@@ -131,11 +131,10 @@ module ActiveRecord
     def self.create_and_load_schema(i, env_name:)
       old, ENV["VERBOSE"] = ENV["VERBOSE"], "false"
 
-      ActiveRecord::Base.configurations.configs_for(env_name: env_name).each do |db_config|
-        db_config.config["database"] += "-#{i}"
-        ActiveRecord::Tasks::DatabaseTasks.create(db_config.config)
-        ActiveRecord::Tasks::DatabaseTasks.load_schema(db_config.config, ActiveRecord::Base.schema_format, nil, env_name, db_config.spec_name)
-      end
+      connection_spec = ActiveRecord::Base.configurations[env_name]
+      connection_spec["database"] += "-#{i}"
+      ActiveRecord::Tasks::DatabaseTasks.create(connection_spec)
+      ActiveRecord::Tasks::DatabaseTasks.load_schema(connection_spec)
     ensure
       ActiveRecord::Base.establish_connection(Rails.env.to_sym)
       ENV["VERBOSE"] = old
@@ -143,10 +142,9 @@ module ActiveRecord
 
     def self.drop(env_name:)
       old, ENV["VERBOSE"] = ENV["VERBOSE"], "false"
+      connection_spec = ActiveRecord::Base.configurations[env_name]
 
-      ActiveRecord::Base.configurations.configs_for(env_name: env_name).each do |db_config|
-        ActiveRecord::Tasks::DatabaseTasks.drop(db_config.config)
-      end
+      ActiveRecord::Tasks::DatabaseTasks.drop(connection_spec)
     ensure
       ENV["VERBOSE"] = old
     end
