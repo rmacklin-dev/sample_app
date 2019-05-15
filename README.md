@@ -43,3 +43,12 @@ My workaround was to explicitly trigger a chromedriver update before parallel
 processes are forked: [`4b3b06b`]
 
 [`4b3b06b`]: https://github.com/rmacklin/rails_parallel_testing_experiments/commit/4b3b06bbeb34ec57277c8b37ad3804cd659539db
+
+---
+
+I also experimented with backporting Rails 6 parallel testing support to a
+Rails 5 application. You can see a working example in the [`rails-5` branch]
+and a description in this gist:
+https://gist.github.com/rmacklin/686a3d284147c009e305527f32abfccd
+
+[`rails-5` branch]: https://github.com/rmacklin/rails_parallel_testing_experiments/tree/rails-5
