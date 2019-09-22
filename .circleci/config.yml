@@ -45,3 +45,5 @@ jobs:
           path: test/reports
       - store_artifacts:
           path: test/reports
+      - store_artifacts:
+          path: tmp/screenshots
