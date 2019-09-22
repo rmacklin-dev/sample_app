@@ -4,7 +4,7 @@ class SampleSystemTest < ApplicationSystemTestCase
   test "visiting the index" do
     visit root_url
 
-    assert_selector "h1", text: "Home#index"
+    assert_selector "h1", text: "Home#indexFAIL"
   end
 
   test "visiting the index slow1" do
